@@ -1,0 +1,30 @@
+.header {
+  background: var(--surface-color);
+  padding: 0.7rem;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.themeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.themeBtn:hover {
+  background-color: var(--hover-background-color);
+}

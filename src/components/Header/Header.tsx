@@ -1,8 +1,20 @@
+import styles from './Header.module.css';
+import { MoonIcon, SunIcon } from '@phosphor-icons/react';
+
 const Header = () => {
   return (
-    <div>
-      <h1>Header</h1>
-    </div>
+    <header className={styles.header}>
+      <div className={styles.container}>
+        <h1>Product Catalog</h1>
+        <button
+          type="button"
+          className={styles.themeBtn}
+          aria-label="Toggle theme"
+        >
+          <MoonIcon size={25} />
+        </button>
+      </div>
+    </header>
   );
 };
 

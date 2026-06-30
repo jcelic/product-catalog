@@ -1,6 +1,19 @@
+:root {
+  --background-color: #fafafa;
+  --surface-color: #ffffff;
+  --text-color: #111827;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --hover-background-color: #f3f4f6;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Nunito', sans-serif;
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
 }
