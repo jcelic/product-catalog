@@ -16,6 +16,9 @@ const ProductDetails = () => {
     return <p>Invalid product ID</p>;
   }
 
+  const currentImage =
+    mainImg ?? productDetails?.images[0] ?? productDetails?.thumbnail;
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -27,7 +30,7 @@ const ProductDetails = () => {
         <article className={styles.card}>
           <section className={styles.gallery}>
             <img
-              src={mainImg ?? productDetails?.thumbnail}
+              src={currentImage}
               alt={productDetails?.title}
               className={styles.mainImg}
             />
@@ -40,11 +43,7 @@ const ProductDetails = () => {
                     type="button"
                     onClick={() => setMainImg(image)}
                     aria-label={`Show ${productDetails.title} image`}
-                    className={
-                      image === (mainImg ?? productDetails.thumbnail)
-                        ? styles.active
-                        : ''
-                    }
+                    className={image === currentImage ? styles.active : ''}
                   >
                     <img src={image} alt={productDetails.title} />
                   </button>
