@@ -3,17 +3,22 @@ import { Link, useParams } from 'react-router-dom';
 import { useProductDetails } from '../../hooks/useProductDetails';
 import { useState } from 'react';
 import { CaretLeftIcon } from '@phosphor-icons/react';
+import ProductDetailsSkeleton from './ProductDetailsSkeleton';
 
 const ProductDetails = () => {
   const { id } = useParams();
 
   const productId = Number(id);
 
-  const { data: productDetails } = useProductDetails(productId);
+  const { data: productDetails, isPending } = useProductDetails(productId);
   const [mainImg, setMainImg] = useState<string>();
 
   if (!id || Number.isNaN(productId)) {
     return <p>Invalid product ID</p>;
+  }
+
+  if (isPending) {
+    return <ProductDetailsSkeleton />;
   }
 
   const currentImage =

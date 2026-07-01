@@ -1,0 +1,62 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--surface-color);
+  border-radius: 20px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.image,
+.title,
+.price,
+.description div {
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  border-radius: 10px;
+}
+
+.image {
+  width: 140px;
+  height: 140px;
+}
+
+.title {
+  width: 70%;
+  height: 2rem;
+}
+
+.description {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.description div {
+  height: 1.1rem;
+}
+
+.description div:nth-child(3) {
+  width: 60%;
+}
+
+.price {
+  width: 60px;
+  height: 1.25rem;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
