@@ -1,4 +1,6 @@
-export const getProducts = async () => {
+import type { ProductsResponse } from '../types/product';
+
+export const getProducts = async (): Promise<ProductsResponse> => {
   try {
     const data = await fetch('https://dummyjson.com/products');
 
@@ -9,6 +11,10 @@ export const getProducts = async () => {
     const response = await data.json();
     return response;
   } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
     throw new Error('Something went wrong.');
   }
 };

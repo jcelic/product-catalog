@@ -1,6 +1,6 @@
 .header {
   background: var(--surface-color);
-  padding: 0.7rem;
+  padding: 0.7rem 1rem;
   box-shadow: 0 2px 8px var(--shadow-color);
 }
 
