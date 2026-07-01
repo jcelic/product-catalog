@@ -2,9 +2,14 @@ import styles from './ProductsPage.module.css';
 import { useProducts } from '../../hooks/useProducts';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import ProductCardSkeleton from '../../components/ProductCard/ProductCardSkeleton';
+import ErrorState from '../../components/ErrorState/ErrorState';
 
 const ProductsPage = () => {
-  const { data: products, isPending } = useProducts();
+  const { data: products, isPending, isError, refetch } = useProducts();
+
+  if (isError) {
+    return <ErrorState onRetry={refetch} />;
+  }
 
   if (isPending) {
     return (

@@ -4,17 +4,27 @@ import { useProductDetails } from '../../hooks/useProductDetails';
 import { useState } from 'react';
 import { CaretLeftIcon } from '@phosphor-icons/react';
 import ProductDetailsSkeleton from './ProductDetailsSkeleton';
+import ErrorState from '../../components/ErrorState/ErrorState';
 
 const ProductDetails = () => {
   const { id } = useParams();
 
   const productId = Number(id);
 
-  const { data: productDetails, isPending } = useProductDetails(productId);
+  const {
+    data: productDetails,
+    isPending,
+    isError,
+    refetch,
+  } = useProductDetails(productId);
   const [mainImg, setMainImg] = useState<string>();
 
   if (!id || Number.isNaN(productId)) {
     return <p>Invalid product ID</p>;
+  }
+
+  if (isError) {
+    return <ErrorState onRetry={refetch} />;
   }
 
   if (isPending) {
