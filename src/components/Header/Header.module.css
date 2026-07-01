@@ -2,6 +2,11 @@
   background: var(--surface-color);
   padding: 0.7rem 1rem;
   box-shadow: 0 2px 8px var(--shadow-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 .container {
@@ -27,4 +32,13 @@
 
 .themeBtn:hover {
   background-color: var(--hover-background-color);
+}
+
+.logo {
+  color: inherit;
+  text-decoration: none;
+}
+
+.logo:hover {
+  opacity: 0.9;
 }

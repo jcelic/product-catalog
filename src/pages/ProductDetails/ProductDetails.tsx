@@ -22,7 +22,7 @@ const ProductDetails = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <Link to="/" className={styles.backButton}>
+        <Link to="/products" className={styles.backButton}>
           <CaretLeftIcon size={18} />
           <span>Back to products</span>
         </Link>
