@@ -4,6 +4,10 @@ export type Product = {
   description: string;
   price: number;
   thumbnail: string;
+  images: string[];
+  rating: number;
+  category: string;
+  stock: number;
 };
 
 export type ProductsResponse = {
