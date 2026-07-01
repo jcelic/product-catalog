@@ -3,6 +3,7 @@ import { useProducts } from '../../hooks/useProducts';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import ProductCardSkeleton from '../../components/ProductCard/ProductCardSkeleton';
 import ErrorState from '../../components/ErrorState/ErrorState';
+import EmptyState from '../../components/EmptyState/EmptyState';
 
 const ProductsPage = () => {
   const { data: products, isPending, isError, refetch } = useProducts();
@@ -19,6 +20,10 @@ const ProductsPage = () => {
         ))}
       </div>
     );
+  }
+
+  if (products.products.length === 0) {
+    return <EmptyState />;
   }
 
   return (
