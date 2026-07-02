@@ -1,5 +1,5 @@
 import styles from './ProductDetails.module.css';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useProductDetails } from '../../hooks/useProductDetails';
 import { useState } from 'react';
 import { CaretLeftIcon } from '@phosphor-icons/react';
@@ -8,6 +8,8 @@ import ErrorState from '../../components/ErrorState/ErrorState';
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const returnTo = location.state?.returnTo;
 
   const productId = Number(id);
 
@@ -37,7 +39,10 @@ const ProductDetails = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <Link to="/products" className={styles.backButton}>
+        <Link
+          to={returnTo ? returnTo : '/products'}
+          className={styles.backButton}
+        >
           <CaretLeftIcon size={18} />
           <span>Back to products</span>
         </Link>

@@ -4,11 +4,16 @@ import { Link } from 'react-router-dom';
 
 type ProductCardProps = {
   product: Product;
+  returnTo: string;
 };
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, returnTo }: ProductCardProps) => {
   return (
-    <Link to={`/products/${product.id}`} className={styles.card}>
+    <Link
+      to={`/products/${product.id}`}
+      className={styles.card}
+      state={{ returnTo }}
+    >
       <img src={product.thumbnail} alt={product.title} />
 
       <h3>{product.title}</h3>

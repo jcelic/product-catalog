@@ -1,8 +1,15 @@
 import type { Product, ProductsResponse } from '../types/product';
 
-export const getProducts = async (): Promise<ProductsResponse> => {
+export const getProducts = async (
+  searchQuery: string = '',
+): Promise<ProductsResponse> => {
   try {
-    const data = await fetch('https://dummyjson.com/products');
+    const query = searchQuery.trim();
+
+    const url = !query
+      ? 'https://dummyjson.com/products'
+      : `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}`;
+    const data = await fetch(url);
 
     if (!data.ok) {
       throw new Error('Failed to fetch products.');
