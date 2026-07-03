@@ -16,28 +16,26 @@ const SearchInput = ({
   clearSearch,
 }: SearchInputProps) => {
   return (
-    <div className={styles.inputBox}>
-      <div className={styles.wrapper}>
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-        <span className={styles.icon}>
-          {isFetching ? (
-            <Spinner />
-          ) : inputValue.trim() ? (
-            <XCircleIcon
-              size={20}
-              onClick={clearSearch}
-              className={styles.clearIcon}
-            />
-          ) : (
-            <MagnifyingGlassIcon size={20} />
-          )}
-        </span>
-      </div>
+    <div className={styles.wrapper}>
+      <input
+        type="text"
+        placeholder="Search products..."
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <span className={styles.icon}>
+        {isFetching ? (
+          <Spinner />
+        ) : inputValue.trim() ? (
+          <XCircleIcon
+            size={20}
+            onClick={clearSearch}
+            className={styles.clearIcon}
+          />
+        ) : (
+          <MagnifyingGlassIcon size={20} />
+        )}
+      </span>
     </div>
   );
 };

@@ -9,3 +9,13 @@
   justify-content: center;
   gap: 1.5rem;
 }
+
+.toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  padding: 0 1rem;
+}

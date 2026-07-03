@@ -4,15 +4,7 @@
   position: relative;
 }
 
-.inputBox {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2.5rem;
-  padding: 0 1rem;
-}
-
-.inputBox input {
+.wrapper input {
   width: 100%;
   padding: 0.9rem 3rem 0.9rem 1.1rem;
   border: none;
@@ -25,11 +17,11 @@
   transition: box-shadow 0.2s ease;
 }
 
-.inputBox input::placeholder {
+.wrapper input::placeholder {
   color: var(--secondary-text-color);
 }
 
-.inputBox input:focus {
+.wrapper input:focus {
   border-color: var(--text-color);
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
 }

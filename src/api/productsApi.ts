@@ -1,3 +1,4 @@
+import type { Category } from '../types/category';
 import type { Product, ProductsResponse } from '../types/product';
 
 export const getProducts = async (
@@ -7,8 +8,8 @@ export const getProducts = async (
     const query = searchQuery.trim();
 
     const url = !query
-      ? 'https://dummyjson.com/products'
-      : `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}`;
+      ? 'https://dummyjson.com/products?limit=0'
+      : `https://dummyjson.com/products/search?q=${encodeURIComponent(query)}&limit=0`;
     const data = await fetch(url);
 
     if (!data.ok) {
@@ -32,6 +33,25 @@ export const getProductDetails = async (id: number): Promise<Product> => {
 
     if (!data.ok) {
       throw new Error('Failed to fetch product details.');
+    }
+
+    const response = await data.json();
+    return response;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error('Something went wrong.');
+  }
+};
+
+export const getCategories = async (): Promise<Category[]> => {
+  try {
+    const data = await fetch('https://dummyjson.com/products/categories');
+
+    if (!data.ok) {
+      throw new Error('Failed to fetch categories.');
     }
 
     const response = await data.json();

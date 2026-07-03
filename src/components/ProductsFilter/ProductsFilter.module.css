@@ -1,0 +1,111 @@
+.filterBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 14px;
+  background: var(--surface-color);
+  color: var(--text-color);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.filterBtn:hover {
+  background: #fafafa;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
+}
+
+.filterWrapper {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+
+  width: 300px;
+
+  padding: 1rem;
+
+  border-radius: 16px;
+  background: var(--surface-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  z-index: 100;
+}
+
+.dropdown h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.section label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.section select,
+.section input {
+  width: 100%;
+
+  padding: 0.75rem;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  background: var(--surface-color);
+  color: var(--text-color);
+
+  font: inherit;
+}
+
+.priceInputs {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.priceInputs span {
+  color: var(--secondary-text-color);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.actions button {
+  padding: 0.65rem 1rem;
+
+  border: none;
+  border-radius: 10px;
+
+  background: var(--background-color);
+  color: var(--text-color);
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.actions button:hover {
+  background: var(--hover-background-color);
+}
