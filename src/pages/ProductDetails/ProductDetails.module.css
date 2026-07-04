@@ -31,8 +31,8 @@
 }
 
 .backButton:hover {
-  background: #fafafa;
-  box-shadow: 0 6px 16px var(--shadow-color);
+  background: var(--hover-background-color);
+  box-shadow: 0 6px 16px var(--shadow-hover-color);
   transform: translateX(-2px);
 }
 

@@ -17,8 +17,8 @@
 }
 
 .filterBtn:hover {
-  background: #fafafa;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.07);
+  background: var(--hover-background-color);
+  box-shadow: 0 3px 8px var(--shadow-hover-color);
 }
 
 .filterWrapper {
@@ -29,19 +29,14 @@
   position: absolute;
   top: calc(100% + 0.75rem);
   right: 0;
-
   width: 300px;
-
   padding: 1rem;
-
   border-radius: 16px;
   background: var(--surface-color);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-
+  box-shadow: 0 10px 30px var(--shadow-dropdown-color);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-
   z-index: 100;
 }
 
@@ -64,16 +59,18 @@
 .section select,
 .section input {
   width: 100%;
-
   padding: 0.75rem;
-
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
-
   background: var(--surface-color);
   color: var(--text-color);
-
   font: inherit;
+}
+
+.section select:focus,
+.section input:focus {
+  outline: none;
+  border-color: var(--text-color);
 }
 
 .priceInputs {
@@ -83,7 +80,7 @@
 }
 
 .priceInputs span {
-  color: var(--secondary-text-color);
+  color: var(--text-secondary-color);
 }
 
 .actions {
@@ -94,15 +91,11 @@
 
 .actions button {
   padding: 0.65rem 1rem;
-
   border: none;
   border-radius: 10px;
-
   background: var(--background-color);
   color: var(--text-color);
-
   cursor: pointer;
-
   transition: background-color 0.2s ease;
 }
 
@@ -112,5 +105,5 @@
 
 .error {
   font-size: 0.8rem;
-  color: red;
+  color: var(--error-color);
 }

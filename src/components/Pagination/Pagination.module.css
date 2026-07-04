@@ -33,7 +33,7 @@
 
 .pageButton:hover,
 .navButton:hover {
-  background: #fafafa;
+  background: var(--hover-background-color);
 }
 
 .active,
@@ -44,19 +44,19 @@
 }
 
 .navButton:disabled {
-  background: #f6f6f6;
-  color: #b6b6b6;
+  background: var(--surface-secondary-color);
+  color: var(--text-secondary-color);
   cursor: default;
   box-shadow: none;
 }
 
 .navButton:disabled:hover {
-  background: #f6f6f6;
-  color: #b6b6b6;
+  background: var(--surface-secondary-color);
+  color: var(--text-secondary-color);
 }
 
 .dots {
-  color: var(--secondary-text-color);
+  color: var(--text-secondary-color);
   user-select: none;
 }
 

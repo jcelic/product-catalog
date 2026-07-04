@@ -20,7 +20,7 @@
 }
 
 .card svg {
-  color: #f59e0b;
+  color: var(--warning-color);
 }
 
 .card h1 {

@@ -10,7 +10,7 @@
   border: none;
   border-radius: 14px;
   background: var(--surface-color);
-  color: var(--secondary-text-color);
+  color: var(--text-secondary-color);
   font-size: 1rem;
   outline: none;
   box-shadow: 0 2px 8px var(--shadow-color);
@@ -18,12 +18,11 @@
 }
 
 .wrapper input::placeholder {
-  color: var(--secondary-text-color);
+  color: var(--text-secondary-color);
 }
 
 .wrapper input:focus {
-  border-color: var(--text-color);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 0 3px var(--input-focus-color);
 }
 
 .icon {
