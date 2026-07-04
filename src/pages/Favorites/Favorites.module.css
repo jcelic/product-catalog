@@ -1,0 +1,54 @@
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.header p {
+  margin-top: 0.5rem;
+  color: #6b7280;
+}
+
+.emptyState {
+  min-height: 360px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.emptyState h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.emptyState p {
+  max-width: 420px;
+  margin: 0.75rem 0 0;
+  color: #6b7280;
+}
