@@ -27,6 +27,7 @@ const ProductsFilter = ({
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const { data: categories } = useCategories();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -46,12 +47,28 @@ const ProductsFilter = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (+draftMinPrice < 0 || +draftMaxPrice < 0) {
+      setError('Price must not be lower than 0.');
+    } else if (
+      +draftMaxPrice &&
+      +draftMinPrice &&
+      +draftMinPrice > +draftMaxPrice
+    ) {
+      setError('Max price must be greater than or equal to min price.');
+    } else {
+      setError('');
+    }
+  }, [draftMinPrice, draftMaxPrice]);
+
   return (
     <div className={styles.filterWrapper} ref={dropdownRef}>
       <button
         type="button"
         className={styles.filterBtn}
-        aria-label="Open filters"
+        aria-label={openDropdown ? 'Close filters' : 'Open filters'}
+        aria-expanded={openDropdown}
+        aria-haspopup="dialog"
         onClick={() => setOpenDropdown((prev) => !prev)}
       >
         <SlidersHorizontalIcon size={22} weight="regular" />
@@ -62,9 +79,10 @@ const ProductsFilter = ({
           <h3>Filters</h3>
 
           <div className={styles.section}>
-            <label>Category</label>
+            <label htmlFor="category">Category</label>
 
             <select
+              id="category"
               onChange={(e) => setDraftCategory(e.target.value)}
               value={draftCategory}
             >
@@ -87,6 +105,8 @@ const ProductsFilter = ({
                 placeholder="Min"
                 value={draftMinPrice}
                 onChange={(e) => setDraftMinPrice(e.target.value)}
+                aria-label="Minimum price"
+                aria-invalid={!!error}
               />
               <span>—</span>
               <input
@@ -95,8 +115,15 @@ const ProductsFilter = ({
                 placeholder="Max"
                 value={draftMaxPrice}
                 onChange={(e) => setDraftMaxPrice(e.target.value)}
+                aria-label="Maximum price"
+                aria-invalid={!!error}
               />
             </div>
+            {error && (
+              <span className={styles.error} role="alert">
+                {error}
+              </span>
+            )}
           </div>
 
           <div className={styles.actions}>
@@ -109,6 +136,7 @@ const ProductsFilter = ({
                 applyFilters();
                 setOpenDropdown(false);
               }}
+              disabled={!!error}
             >
               Apply
             </button>
