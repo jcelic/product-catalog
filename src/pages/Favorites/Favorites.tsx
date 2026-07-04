@@ -3,7 +3,7 @@ import styles from './Favorites.module.css';
 
 const Favorites = () => {
   return (
-    <main className={styles.container}>
+    <div className={styles.container}>
       <section className={styles.header}>
         <h1>Your favorites</h1>
         <p>Products you save will appear here.</p>
@@ -16,7 +16,7 @@ const Favorites = () => {
         <h2>No favorite products yet</h2>
         <p>Browse the catalog and add products you want to revisit later.</p>
       </section>
-    </main>
+    </div>
   );
 };
 

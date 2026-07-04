@@ -56,7 +56,7 @@ const Login = () => {
   };
 
   return (
-    <main className={styles.container}>
+    <section className={styles.container}>
       <div className={styles.card}>
         <h1>Welcome back</h1>
         <p>Sign in to access your favorite products.</p>
@@ -101,7 +101,7 @@ const Login = () => {
           </button>
         </form>
       </div>
-    </main>
+    </section>
   );
 };
 
