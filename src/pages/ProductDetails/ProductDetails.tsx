@@ -1,7 +1,7 @@
 import styles from './ProductDetails.module.css';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useProductDetails } from '../../hooks/useProductDetails';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CaretLeftIcon } from '@phosphor-icons/react';
 import ProductDetailsSkeleton from './ProductDetailsSkeleton';
 import ErrorState from '../../components/ErrorState/ErrorState';
@@ -22,6 +22,10 @@ const ProductDetails = () => {
     refetch,
   } = useProductDetails(productId);
   const [mainImg, setMainImg] = useState<string>();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!id || Number.isNaN(productId) || productId <= 0) {
     return (

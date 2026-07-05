@@ -13,6 +13,9 @@ const ProductCard = ({ product, returnTo }: ProductCardProps) => {
       to={`/products/${product.id}`}
       className={styles.card}
       state={{ returnTo }}
+      onClick={() =>
+        sessionStorage.setItem('productsScrollY', String(window.scrollY))
+      }
     >
       <img src={product.thumbnail} alt={product.title} />
 

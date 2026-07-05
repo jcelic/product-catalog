@@ -147,6 +147,21 @@ const ProductsPage = () => {
     }
   }, [search, totalPages]);
 
+  useEffect(() => {
+    if (showLoading || !renderList?.length) return;
+
+    const savedScrollY = sessionStorage.getItem('productsScrollY');
+
+    if (!savedScrollY) return;
+
+    window.scrollTo({
+      top: Number(savedScrollY),
+      behavior: 'instant',
+    });
+
+    sessionStorage.removeItem('productsScrollY');
+  }, [showLoading, renderList]);
+
   const clearSearch = () => {
     setInputValue('');
     setDebouncedInputValue('');
