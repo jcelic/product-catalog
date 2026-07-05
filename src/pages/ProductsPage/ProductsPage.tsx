@@ -43,6 +43,7 @@ const ProductsPage = () => {
     if (minPrice && product.price < +minPrice) return false;
     if (maxPrice && product.price > +maxPrice) return false;
     if (category && product.category !== category) return false;
+
     return true;
   });
 
@@ -51,6 +52,19 @@ const ProductsPage = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const renderList = baseList?.slice(startIndex, endIndex);
+
+  const isSearchDebouncing = inputValue.trim() !== debouncedInputValue.trim();
+  const showLoading =
+    isPending ||
+    isSearchDebouncing ||
+    (Boolean(debouncedInputValue.trim()) && isFetching);
+
+  const showSearchEmpty =
+    Boolean(inputValue.trim()) &&
+    Boolean(debouncedInputValue.trim()) &&
+    products?.products.length === 0;
+
+  const showFilterEmpty = renderList?.length === 0;
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -86,7 +100,9 @@ const ProductsPage = () => {
     const currentSearchParam = searchParams.get('search') ?? '';
     const nextSearchParam = debouncedInputValue.trim();
 
-    if (currentSearchParam === nextSearchParam) return;
+    if (currentSearchParam === nextSearchParam) {
+      return;
+    }
 
     const params = new URLSearchParams(searchParams);
 
@@ -187,8 +203,10 @@ const ProductsPage = () => {
     if (page === currentPage) {
       return;
     }
+
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
     const params = new URLSearchParams(searchParams);
 
     if (page > 1) {
@@ -202,25 +220,6 @@ const ProductsPage = () => {
 
   if (isError) {
     return <ErrorState onRetry={refetch} />;
-  }
-
-  if (isPending && !inputValue) {
-    return (
-      <div className={styles.grid}>
-        {Array.from({ length: 12 }).map((_, index) => (
-          <ProductCardSkeleton key={index} />
-        ))}
-      </div>
-    );
-  }
-
-  if (!inputValue.trim() && products?.products.length === 0) {
-    return (
-      <EmptyState
-        title="No products found"
-        desc="There are currently no products to display."
-      />
-    );
   }
 
   return (
@@ -245,12 +244,18 @@ const ProductsPage = () => {
         />
       </div>
 
-      {debouncedInputValue.trim() && products?.products.length === 0 ? (
+      {showLoading ? (
+        <div className={styles.grid}>
+          {Array.from({ length: 12 }).map((_, index) => (
+            <ProductCardSkeleton key={index} />
+          ))}
+        </div>
+      ) : showSearchEmpty ? (
         <EmptyState
           title="No results found"
           desc="Try a different search term."
         />
-      ) : renderList?.length === 0 ? (
+      ) : showFilterEmpty ? (
         <EmptyState
           title="No products match your filters"
           desc="Try adjusting or clearing your filters."

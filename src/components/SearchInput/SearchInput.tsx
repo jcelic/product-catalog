@@ -21,7 +21,16 @@ const SearchInput = ({
         type="text"
         placeholder="Search products..."
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={(e) => {
+          const value = e.target.value;
+
+          if (!value.trim()) {
+            clearSearch();
+            return;
+          }
+
+          setInputValue(value);
+        }}
       />
       <span className={styles.icon}>
         {isFetching ? (
