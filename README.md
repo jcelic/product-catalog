@@ -6,13 +6,19 @@ The application allows users to browse products, search and filter them, view de
 
 ---
 
+## Live Demo
+
+[View Live Demo](https://solution-josip-celic.vercel.app)
+
+---
+
 ## Features
 
 - Responsive product catalog
 - Product details page
 - Product search with 300ms debounce
 - Category and price filtering
-- Client-side pagination to ensure search and filters are applied across the entire product list rather than only the currently loaded page
+- Client-side pagination after fetching the full product list to ensure search and filters are applied across all products
 - Search, filters and pagination synchronized with URL query parameters
 - Loading, empty and error states
 - Authentication using the DummyJSON API
@@ -27,7 +33,7 @@ The application allows users to browse products, search and filter them, view de
 - React 19
 - TypeScript 5
 - Vite
-- React Router
+- React Router 7
 - TanStack Query
 - CSS Modules
 - Vitest
@@ -105,7 +111,6 @@ emilyspass
 ```text
 src
 ├── api
-├── assets
 ├── components
 ├── context
 ├── hooks
@@ -113,6 +118,7 @@ src
 ├── pages
 ├── test
 ├── types
+├── utils
 ├── App.tsx
 ├── main.tsx
 └── index.css
@@ -146,7 +152,7 @@ It was mainly used to:
 
 - explain certain TypeScript concepts and typing patterns
 - explain and assist with writing unit and component tests using Vitest and React Testing Library
-- discuss the implementation of URL-synchronized search, filtering and pagination using query parameters instead of keeping the state only on the client
+- discuss the implementation of URL-synchronized search, filtering and pagination using query parameters instead of keeping that state only in React
 - assist with the styling of some UI components (e.g. search input and skeleton loaders) to speed up the development process
 - assist with organizing CSS variables and adapting them for the light/dark theme
 - review the final code and suggest improvements to readability, structure and overall code quality
