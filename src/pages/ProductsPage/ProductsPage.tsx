@@ -11,6 +11,7 @@ import ProductsFilter from '../../components/ProductsFilter/ProductsFilter';
 import Pagination from '../../components/Pagination/Pagination';
 
 const ProductsPage = () => {
+  // Read current URL state
   const [searchParams, setSearchParams] = useSearchParams();
   const { pathname, search } = useLocation();
   const skipSearchUrlSync = useRef(false);
@@ -20,13 +21,16 @@ const ProductsPage = () => {
   const minPrice = searchParams.get('minPrice') ?? '';
   const maxPrice = searchParams.get('maxPrice') ?? '';
 
+  // Local search state
   const [inputValue, setInputValue] = useState(urlSearch);
   const [debouncedInputValue, setDebouncedInputValue] = useState(urlSearch);
 
+  // Filter draft state
   const [draftCategory, setDraftCategory] = useState(category);
   const [draftMinPrice, setDraftMinPrice] = useState(minPrice);
   const [draftMaxPrice, setDraftMaxPrice] = useState(maxPrice);
 
+  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
 
   const returnTo = pathname + search;
@@ -39,6 +43,7 @@ const ProductsPage = () => {
     refetch,
   } = useProducts(debouncedInputValue);
 
+  // Filter products based on selected criteria
   const baseList = products?.products?.filter((product) => {
     if (minPrice && product.price < +minPrice) return false;
     if (maxPrice && product.price > +maxPrice) return false;
@@ -47,12 +52,14 @@ const ProductsPage = () => {
     return true;
   });
 
+  // Client-side pagination
   const itemsPerPage = 21;
   const totalPages = Math.ceil((baseList?.length ?? 0) / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const renderList = baseList?.slice(startIndex, endIndex);
 
+  // UI state flags
   const isSearchDebouncing = inputValue.trim() !== debouncedInputValue.trim();
   const showLoading =
     isPending ||
@@ -66,6 +73,7 @@ const ProductsPage = () => {
 
   const showFilterEmpty = renderList?.length === 0;
 
+  // Debounce search input
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedInputValue(inputValue);
@@ -74,6 +82,7 @@ const ProductsPage = () => {
     return () => clearTimeout(timeout);
   }, [inputValue]);
 
+  // Sync component state from URL changes
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const urlSearch = searchParams.get('search') ?? '';
@@ -94,6 +103,7 @@ const ProductsPage = () => {
   }, [search]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
+  // Sync debounced search with URL
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (skipSearchUrlSync.current) {
@@ -123,6 +133,7 @@ const ProductsPage = () => {
   }, [debouncedInputValue, searchParams]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
+  // Sync current page with URL
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
@@ -156,6 +167,7 @@ const ProductsPage = () => {
   }, [search, totalPages]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
+  // Restore scroll position after returning from product details
   useEffect(() => {
     if (showLoading || !renderList?.length) return;
 
@@ -171,6 +183,7 @@ const ProductsPage = () => {
     sessionStorage.removeItem('productsScrollY');
   }, [showLoading, renderList]);
 
+  // Clear search query
   const clearSearch = () => {
     setInputValue('');
     setDebouncedInputValue('');
@@ -182,6 +195,7 @@ const ProductsPage = () => {
     setSearchParams(params);
   };
 
+  // Reset all filters
   const resetFilters = () => {
     setDraftCategory('');
     setDraftMinPrice('');
@@ -196,6 +210,7 @@ const ProductsPage = () => {
     setSearchParams(params);
   };
 
+  // Apply selected filters
   const applyFilters = () => {
     setCurrentPage(1);
 
@@ -223,6 +238,7 @@ const ProductsPage = () => {
     setSearchParams(params);
   };
 
+  // Handle pagination changes
   const onPageChange = (page: number) => {
     if (page === currentPage) {
       return;
