@@ -10,7 +10,7 @@ const EmptyState = ({ title, desc }: EmptyStateProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <EmptyIcon size={48} />
+        <EmptyIcon size={48} aria-hidden="true" />
         <h1>{title}</h1>
         <p>{desc}</p>
       </div>

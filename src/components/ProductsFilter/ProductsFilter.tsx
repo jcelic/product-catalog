@@ -40,10 +40,18 @@ const ProductsFilter = ({
       }
     };
 
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpenDropdown(false);
+      }
+    };
+
     document.addEventListener('click', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
 
     return () => {
       document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
     };
   }, []);
 
@@ -69,13 +77,19 @@ const ProductsFilter = ({
         aria-label={openDropdown ? 'Close filters' : 'Open filters'}
         aria-expanded={openDropdown}
         aria-haspopup="dialog"
+        aria-controls={openDropdown ? 'products-filter-dropdown' : undefined}
         onClick={() => setOpenDropdown((prev) => !prev)}
       >
-        <SlidersHorizontalIcon size={22} weight="regular" />
+        <SlidersHorizontalIcon size={22} weight="regular" aria-hidden="true" />
       </button>
 
       {openDropdown && (
-        <div className={styles.dropdown}>
+        <div
+          className={styles.dropdown}
+          id="products-filter-dropdown"
+          role="dialog"
+          aria-label="Product filters"
+        >
           <h3>Filters</h3>
 
           <div className={styles.section}>
@@ -107,6 +121,7 @@ const ProductsFilter = ({
                 onChange={(e) => setDraftMinPrice(e.target.value)}
                 aria-label="Minimum price"
                 aria-invalid={!!error}
+                aria-describedby={error ? 'price-error' : undefined}
               />
               <span>—</span>
               <input
@@ -117,10 +132,11 @@ const ProductsFilter = ({
                 onChange={(e) => setDraftMaxPrice(e.target.value)}
                 aria-label="Maximum price"
                 aria-invalid={!!error}
+                aria-describedby={error ? 'price-error' : undefined}
               />
             </div>
             {error && (
-              <span className={styles.error} role="alert">
+              <span className={styles.error} id="price-error" role="alert">
                 {error}
               </span>
             )}

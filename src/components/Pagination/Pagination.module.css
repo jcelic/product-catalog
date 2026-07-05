@@ -13,8 +13,8 @@
   gap: 0.5rem;
 }
 
-.pageButton,
-.navButton {
+.pageBtn,
+.navBtn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,8 +31,8 @@
   transition: all 0.2s ease;
 }
 
-.pageButton:hover,
-.navButton:hover {
+.pageBtn:hover,
+.navBtn:hover {
   background: var(--hover-background-color);
 }
 
@@ -43,14 +43,14 @@
   cursor: default;
 }
 
-.navButton:disabled {
+.navBtn:disabled {
   background: var(--surface-secondary-color);
   color: var(--text-secondary-color);
   cursor: default;
   box-shadow: none;
 }
 
-.navButton:disabled:hover {
+.navBtn:disabled:hover {
   background: var(--surface-secondary-color);
   color: var(--text-secondary-color);
 }
@@ -58,6 +58,12 @@
 .dots {
   color: var(--text-secondary-color);
   user-select: none;
+}
+
+.pageBtn:focus-visible,
+.navBtn:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 3px;
 }
 
 @media (max-width: 768px) {
@@ -69,8 +75,8 @@
     gap: 0.35rem;
   }
 
-  .pageButton,
-  .navButton {
+  .pageBtn,
+  .navBtn {
     min-width: 38px;
     height: 38px;
     padding: 0 0.75rem;
@@ -88,8 +94,8 @@
     gap: 0.25rem;
   }
 
-  .pageButton,
-  .navButton {
+  .pageBtn,
+  .navBtn {
     min-width: 34px;
     height: 34px;
     padding: 0 0.5rem;

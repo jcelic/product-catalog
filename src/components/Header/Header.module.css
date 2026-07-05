@@ -65,3 +65,10 @@
 .headerLink:hover {
   background-color: var(--hover-background-color);
 }
+
+.logo:focus-visible,
+.headerLink:focus-visible,
+.themeBtn:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 3px;
+}

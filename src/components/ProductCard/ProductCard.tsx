@@ -13,6 +13,7 @@ const ProductCard = ({ product, returnTo }: ProductCardProps) => {
       to={`/products/${product.id}`}
       className={styles.card}
       state={{ returnTo }}
+      aria-label={`View details for ${product.title}`}
       onClick={() =>
         sessionStorage.setItem('productsScrollY', String(window.scrollY))
       }

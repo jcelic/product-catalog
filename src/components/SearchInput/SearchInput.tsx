@@ -21,6 +21,7 @@ const SearchInput = ({
         type="text"
         placeholder="Search products..."
         value={inputValue}
+        aria-label="Search products"
         onChange={(e) => {
           const value = e.target.value;
 
@@ -36,13 +37,16 @@ const SearchInput = ({
         {isFetching ? (
           <Spinner />
         ) : inputValue.trim() ? (
-          <XCircleIcon
-            size={20}
+          <button
+            type="button"
+            className={styles.clearBtn}
             onClick={clearSearch}
-            className={styles.clearIcon}
-          />
+            aria-label="Clear search"
+          >
+            <XCircleIcon size={23} aria-hidden="true" />
+          </button>
         ) : (
-          <MagnifyingGlassIcon size={20} />
+          <MagnifyingGlassIcon size={20} aria-hidden="true" />
         )}
       </span>
     </div>

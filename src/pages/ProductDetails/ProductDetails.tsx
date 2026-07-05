@@ -56,11 +56,8 @@ const ProductDetails = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <Link
-          to={returnTo ? returnTo : '/products'}
-          className={styles.backButton}
-        >
-          <CaretLeftIcon size={18} />
+        <Link to={returnTo ? returnTo : '/products'} className={styles.backBtn}>
+          <CaretLeftIcon size={18} aria-hidden="true" />
           <span>Back to products</span>
         </Link>
 
@@ -74,15 +71,16 @@ const ProductDetails = () => {
 
             {productDetails && productDetails.images.length > 1 && (
               <div className={styles.thumbnails}>
-                {productDetails.images.map((image) => (
+                {productDetails.images.map((image, index) => (
                   <button
                     key={image}
                     type="button"
                     onClick={() => setMainImg(image)}
-                    aria-label={`Show ${productDetails.title} image`}
+                    aria-label={`Show image ${index + 1} of ${productDetails.title}`}
+                    aria-pressed={image === currentImage}
                     className={image === currentImage ? styles.active : ''}
                   >
-                    <img src={image} alt={productDetails.title} />
+                    <img src={image} alt="" />
                   </button>
                 ))}
               </div>

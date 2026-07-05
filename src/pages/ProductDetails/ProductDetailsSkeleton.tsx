@@ -3,10 +3,10 @@ import { CaretLeftIcon } from '@phosphor-icons/react';
 
 const ProductDetailsSkeleton = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} aria-hidden="true">
       <div className={styles.content}>
-        <div className={styles.backButton}>
-          <CaretLeftIcon size={18} />
+        <div className={styles.backBtn}>
+          <CaretLeftIcon size={18} aria-hidden="true" />
           <span>Back to products</span>
         </div>
 

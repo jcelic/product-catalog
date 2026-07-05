@@ -260,7 +260,11 @@ const ProductsPage = () => {
       </div>
 
       {showLoading ? (
-        <div className={styles.grid}>
+        <div
+          className={styles.grid}
+          role="status"
+          aria-label="Loading products"
+        >
           {Array.from({ length: 12 }).map((_, index) => (
             <ProductCardSkeleton key={index} />
           ))}
@@ -277,7 +281,7 @@ const ProductsPage = () => {
         />
       ) : (
         <>
-          <div className={styles.grid}>
+          <div className={styles.grid} aria-label="Product list">
             {renderList?.map((product) => (
               <ProductCard
                 product={product}

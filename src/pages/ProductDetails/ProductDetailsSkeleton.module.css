@@ -12,7 +12,7 @@
   gap: 1rem;
 }
 
-.backButton {
+.backBtn {
   width: fit-content;
   display: inline-flex;
   align-items: center;

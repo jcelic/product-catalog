@@ -2,7 +2,7 @@ import styles from './ProductCardSkeleton.module.css';
 
 const ProductCardSkeleton = () => {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} aria-hidden="true">
       <div className={styles.image} />
 
       <div className={styles.title} />

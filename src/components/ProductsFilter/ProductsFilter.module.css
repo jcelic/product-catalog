@@ -1,3 +1,7 @@
+.filterWrapper {
+  position: relative;
+}
+
 .filterBtn {
   display: flex;
   align-items: center;
@@ -21,8 +25,10 @@
   box-shadow: 0 3px 8px var(--shadow-hover-color);
 }
 
-.filterWrapper {
-  position: relative;
+.filterBtn:focus-visible,
+.actions button:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 3px;
 }
 
 .dropdown {
@@ -67,10 +73,11 @@
   font: inherit;
 }
 
-.section select:focus,
-.section input:focus {
+.section select:focus-visible,
+.section input:focus-visible {
   outline: none;
   border-color: var(--text-color);
+  box-shadow: 0 0 0 2px var(--input-focus-color);
 }
 
 .priceInputs {

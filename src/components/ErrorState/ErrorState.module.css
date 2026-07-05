@@ -34,12 +34,11 @@
   color: var(--text-secondary-color);
 }
 
-.button {
+.btn {
   margin-top: 0.5rem;
   padding: 0.7rem 1.4rem;
-  border: none;
+  border: 1px solid var(--text-color);
   border-radius: 10px;
-  outline: 1px solid var(--text-color);
   background: var(--surface-color);
   color: var(--text-color);
   font-size: 0.95rem;
@@ -50,7 +49,12 @@
     color 0.2s ease;
 }
 
-.button:hover {
+.btn:hover {
   background: var(--text-color);
   color: var(--surface-color);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 3px;
 }

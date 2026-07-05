@@ -25,19 +25,19 @@ const Header = () => {
           </Link>
         </h1>
 
-        <nav className={styles.actions}>
+        <nav className={styles.actions} aria-label="Primary navigation">
           {pathname === '/favorites' ? (
             <Link
               className={styles.headerLink}
               to="/products"
               onClick={handleLogout}
             >
-              <SignOutIcon size={20} weight="regular" />
+              <SignOutIcon size={20} weight="regular" aria-hidden="true" />
               <span>Log out</span>
             </Link>
           ) : (
             <Link to="/favorites" className={styles.headerLink}>
-              <HeartIcon size={20} weight="regular" />
+              <HeartIcon size={20} weight="regular" aria-hidden="true" />
               <span>Favorites</span>
             </Link>
           )}
@@ -45,10 +45,18 @@ const Header = () => {
           <button
             type="button"
             className={styles.themeBtn}
-            aria-label="Toggle theme"
             onClick={toggleTheme}
+            aria-label={
+              theme === 'light'
+                ? 'Switch to dark theme'
+                : 'Switch to light theme'
+            }
           >
-            {theme === 'light' ? <MoonIcon size={25} /> : <SunIcon size={25} />}
+            {theme === 'light' ? (
+              <MoonIcon size={25} aria-hidden="true" />
+            ) : (
+              <SunIcon size={25} aria-hidden="true" />
+            )}
           </button>
         </nav>
       </div>

@@ -50,12 +50,12 @@ const Pagination = ({
     <nav className={styles.pagination} aria-label="Pagination">
       <button
         type="button"
-        className={styles.navButton}
+        className={styles.navBtn}
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage <= 1}
         aria-label="Previous page"
       >
-        <CaretLeftIcon />
+        <CaretLeftIcon aria-hidden="true" />
       </button>
 
       <div className={styles.pages}>
@@ -64,7 +64,7 @@ const Pagination = ({
             <button
               type="button"
               key={item}
-              className={`${styles.pageButton} ${
+              className={`${styles.pageBtn} ${
                 currentPage === item ? styles.active : ''
               }`}
               onClick={() => onPageChange(item)}
@@ -74,7 +74,11 @@ const Pagination = ({
               {item}
             </button>
           ) : (
-            <span key={`dots-${index}`} aria-hidden="true">
+            <span
+              key={`dots-${index}`}
+              className={styles.dots}
+              aria-hidden="true"
+            >
               ...
             </span>
           ),
@@ -83,12 +87,12 @@ const Pagination = ({
 
       <button
         type="button"
-        className={styles.navButton}
+        className={styles.navBtn}
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage >= totalPages}
         aria-label="Next page"
       >
-        <CaretRightIcon />
+        <CaretRightIcon aria-hidden="true" />
       </button>
     </nav>
   );

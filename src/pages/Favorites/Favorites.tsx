@@ -11,7 +11,7 @@ const Favorites = () => {
 
       <section className={styles.emptyState}>
         <div className={styles.icon}>
-          <HeartIcon />
+          <HeartIcon size={32} aria-hidden="true" />
         </div>
         <h2>No favorite products yet</h2>
         <p>Browse the catalog and add products you want to revisit later.</p>

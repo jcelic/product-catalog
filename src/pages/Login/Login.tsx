@@ -65,6 +65,7 @@ const Login = () => {
           className={styles.form}
           onSubmit={handleSubmit}
           autoComplete="off"
+          aria-describedby={error ? 'login-error' : undefined}
         >
           <div className={styles.field}>
             <label htmlFor="username">Username</label>
@@ -73,6 +74,7 @@ const Login = () => {
               type="text"
               placeholder="Enter your username"
               value={username}
+              aria-invalid={!!error}
               onChange={(e) => {
                 setUsername(e.target.value);
                 setError('');
@@ -87,16 +89,23 @@ const Login = () => {
               type="password"
               placeholder="Enter your password"
               value={password}
+              aria-invalid={!!error}
               onChange={(e) => {
                 setPassword(e.target.value);
                 setError('');
               }}
             />
           </div>
-          <span className={styles.error} role="alert">
-            {error}
-          </span>
-          <button type="submit" disabled={isSubmitting}>
+          {error && (
+            <span className={styles.error} id="login-error" role="alert">
+              {error}
+            </span>
+          )}
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            aria-busy={isSubmitting}
+          >
             {isSubmitting ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
