@@ -1,7 +1,7 @@
 import { SlidersHorizontalIcon } from '@phosphor-icons/react';
-import styles from './ProductsFilter.module.css';
-import { useCategories } from '../../hooks/useCategories';
 import { useEffect, useRef, useState } from 'react';
+import { useCategories } from '../../hooks/useCategories';
+import styles from './ProductsFilter.module.css';
 
 type ProductsFilterProps = {
   setDraftCategory: (category: string) => void;
@@ -27,7 +27,17 @@ const ProductsFilter = ({
   const [openDropdown, setOpenDropdown] = useState<boolean>(false);
   const { data: categories } = useCategories();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [error, setError] = useState<string>('');
+
+  const hasNegativePrice = +draftMinPrice < 0 || +draftMaxPrice < 0;
+
+  const hasInvalidPriceRange =
+    !!draftMaxPrice && !!draftMinPrice && +draftMinPrice > +draftMaxPrice;
+
+  const error = hasNegativePrice
+    ? 'Price must not be lower than 0.'
+    : hasInvalidPriceRange
+      ? 'Max price must be greater than or equal to min price.'
+      : '';
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -54,20 +64,6 @@ const ProductsFilter = ({
       document.removeEventListener('keydown', handleEscape);
     };
   }, []);
-
-  useEffect(() => {
-    if (+draftMinPrice < 0 || +draftMaxPrice < 0) {
-      setError('Price must not be lower than 0.');
-    } else if (
-      +draftMaxPrice &&
-      +draftMinPrice &&
-      +draftMinPrice > +draftMaxPrice
-    ) {
-      setError('Max price must be greater than or equal to min price.');
-    } else {
-      setError('');
-    }
-  }, [draftMinPrice, draftMaxPrice]);
 
   return (
     <div className={styles.filterWrapper} ref={dropdownRef}>
@@ -135,6 +131,7 @@ const ProductsFilter = ({
                 aria-describedby={error ? 'price-error' : undefined}
               />
             </div>
+
             {error && (
               <span className={styles.error} id="price-error" role="alert">
                 {error}

@@ -1,15 +1,10 @@
-import { createContext, useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { ThemeContext } from './ThemeContext';
 import type { Theme } from '../types/theme';
 
-type ThemeContextValue = {
-  theme: Theme;
-  toggleTheme: () => void;
-};
 type ThemeProviderProps = {
   children: ReactNode;
 };
-
-export const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>(() => {
@@ -23,21 +18,11 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
       '(prefers-color-scheme: dark)',
     ).matches;
 
-    if (prefersDark) {
-      return 'dark';
-    }
-
-    return 'light';
+    return prefersDark ? 'dark' : 'light';
   });
 
   const toggleTheme = () => {
-    setTheme((currentTheme) => {
-      if (currentTheme === 'light') {
-        return 'dark';
-      }
-
-      return 'light';
-    });
+    setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
   };
 
   useEffect(() => {

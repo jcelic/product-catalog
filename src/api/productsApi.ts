@@ -20,10 +20,10 @@ export const getProducts = async (
     return response;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
 
-    throw new Error('Something went wrong.');
+    throw new Error('Something went wrong.', { cause: error });
   }
 };
 
@@ -43,10 +43,10 @@ export const getProductDetails = async (id: number): Promise<Product> => {
     return response;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
 
-    throw new Error('Something went wrong.');
+    throw new Error('Something went wrong.', { cause: error });
   }
 };
 
@@ -62,9 +62,9 @@ export const getCategories = async (): Promise<Category[]> => {
     return response;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
 
-    throw new Error('Something went wrong.');
+    throw new Error('Something went wrong.', { cause: error });
   }
 };

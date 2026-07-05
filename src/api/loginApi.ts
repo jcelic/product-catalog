@@ -22,9 +22,9 @@ export const loginUser = async (
     return response;
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      throw new Error(error.message, { cause: error });
     }
 
-    throw new Error('Something went wrong.');
+    throw new Error('Something went wrong.', { cause: error });
   }
 };

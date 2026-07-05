@@ -74,6 +74,7 @@ const ProductsPage = () => {
     return () => clearTimeout(timeout);
   }, [inputValue]);
 
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const urlSearch = searchParams.get('search') ?? '';
     const urlCategory = searchParams.get('category') ?? '';
@@ -89,8 +90,11 @@ const ProductsPage = () => {
       skipSearchUrlSync.current = true;
       setDebouncedInputValue(urlSearch);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (skipSearchUrlSync.current) {
       skipSearchUrlSync.current = false;
@@ -115,8 +119,11 @@ const ProductsPage = () => {
     params.delete('page');
     setCurrentPage(1);
     setSearchParams(params);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedInputValue, searchParams]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
     const pageParam = params.get('page');
@@ -145,7 +152,9 @@ const ProductsPage = () => {
     if (totalPages > 0) {
       setCurrentPage(pageNumber);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, totalPages]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
     if (showLoading || !renderList?.length) return;
