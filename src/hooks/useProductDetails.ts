@@ -5,6 +5,6 @@ export const useProductDetails = (id: number) => {
   return useQuery({
     queryKey: ['product', id],
     queryFn: () => getProductDetails(id),
-    enabled: !Number.isNaN(id),
+    enabled: !Number.isNaN(id) && id > 0,
   });
 };

@@ -11,6 +11,8 @@ import ProductsFilter from '../../components/ProductsFilter/ProductsFilter';
 import Pagination from '../../components/Pagination/Pagination';
 import { useProductQueryParams } from '../../hooks/useProductQueryParams';
 
+const ITEMS_PER_PAGE = 21;
+
 const ProductsPage = () => {
   // Read current URL state
   const { pathname, search: urlSearch } = useLocation();
@@ -61,10 +63,9 @@ const ProductsPage = () => {
   });
 
   // Client-side pagination
-  const itemsPerPage = 21;
-  const totalPages = Math.ceil((baseList?.length ?? 0) / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  const totalPages = Math.ceil((baseList?.length ?? 0) / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
   const renderList = baseList?.slice(startIndex, endIndex);
 
   // UI state flags
@@ -169,7 +170,7 @@ const ProductsPage = () => {
     });
 
     sessionStorage.removeItem('productsScrollY');
-  }, [showLoading, renderList]);
+  }, [showLoading, renderList?.length]);
 
   // Clear search query
   const handleClearSearch = () => {
