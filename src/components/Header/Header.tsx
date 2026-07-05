@@ -6,9 +6,11 @@ import {
   SunIcon,
 } from '@phosphor-icons/react';
 import styles from './Header.module.css';
+import { useTheme } from '../../hooks/useTheme';
 
 const Header = () => {
   const { pathname } = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
@@ -44,9 +46,9 @@ const Header = () => {
             type="button"
             className={styles.themeBtn}
             aria-label="Toggle theme"
+            onClick={toggleTheme}
           >
-            <MoonIcon size={25} />
-            {/* <SunIcon size={25} /> */}
+            {theme === 'light' ? <MoonIcon size={25} /> : <SunIcon size={25} />}
           </button>
         </nav>
       </div>
