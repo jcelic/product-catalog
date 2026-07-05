@@ -11,6 +11,7 @@ import ProductsFilter from '../../components/ProductsFilter/ProductsFilter';
 import Pagination from '../../components/Pagination/Pagination';
 import { useProductQueryParams } from '../../hooks/useProductQueryParams';
 import { useDebouncedValue } from '../../hooks/useDebouncedValue';
+import { filterProducts } from '../../utils/filterProducts';
 
 const ITEMS_PER_PAGE = 21;
 
@@ -54,13 +55,14 @@ const ProductsPage = () => {
   } = useProducts(debouncedInputValue);
 
   // Filter products based on selected criteria
-  const baseList = products?.products?.filter((product) => {
-    if (minPrice && product.price < +minPrice) return false;
-    if (maxPrice && product.price > +maxPrice) return false;
-    if (category && product.category !== category) return false;
-
-    return true;
-  });
+  const baseList = products
+    ? filterProducts({
+        products: products.products,
+        category,
+        minPrice,
+        maxPrice,
+      })
+    : undefined;
 
   // Client-side pagination
   const totalPages = Math.ceil((baseList?.length ?? 0) / ITEMS_PER_PAGE);
