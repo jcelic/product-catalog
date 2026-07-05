@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { CaretLeftIcon } from '@phosphor-icons/react';
 import ProductDetailsSkeleton from './ProductDetailsSkeleton';
 import ErrorState from '../../components/ErrorState/ErrorState';
+import NotFound from '../../components/NotFound/NotFound';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -17,12 +18,24 @@ const ProductDetails = () => {
     data: productDetails,
     isPending,
     isError,
+    error,
     refetch,
   } = useProductDetails(productId);
   const [mainImg, setMainImg] = useState<string>();
 
-  if (!id || Number.isNaN(productId)) {
-    return <p>Invalid product ID</p>;
+  if (!id || Number.isNaN(productId) || productId <= 0) {
+    return (
+      <NotFound title="Invalid product" desc="The product ID is not valid." />
+    );
+  }
+
+  if (isError && error?.message === 'PRODUCT_NOT_FOUND') {
+    return (
+      <NotFound
+        title="Product not found"
+        desc="The product you're looking for doesn't exist."
+      />
+    );
   }
 
   if (isError) {

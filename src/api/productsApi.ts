@@ -31,6 +31,10 @@ export const getProductDetails = async (id: number): Promise<Product> => {
   try {
     const data = await fetch(`https://dummyjson.com/products/${id}`);
 
+    if (data.status === 404) {
+      throw new Error('PRODUCT_NOT_FOUND');
+    }
+
     if (!data.ok) {
       throw new Error('Failed to fetch product details.');
     }
