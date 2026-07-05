@@ -10,11 +10,11 @@ import { useLocation } from 'react-router-dom';
 import ProductsFilter from '../../components/ProductsFilter/ProductsFilter';
 import Pagination from '../../components/Pagination/Pagination';
 import { useProductQueryParams } from '../../hooks/useProductQueryParams';
+import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 
 const ITEMS_PER_PAGE = 21;
 
 const ProductsPage = () => {
-  // Read current URL state
   const { pathname, search: urlSearch } = useLocation();
   const skipSearchUrlSync = useRef(false);
 
@@ -33,7 +33,7 @@ const ProductsPage = () => {
 
   // Local search state
   const [inputValue, setInputValue] = useState(search);
-  const [debouncedInputValue, setDebouncedInputValue] = useState(search);
+  const debouncedInputValue = useDebouncedValue(inputValue, 300);
 
   // Filter draft state
   const [draftCategory, setDraftCategory] = useState(category);
@@ -82,15 +82,6 @@ const ProductsPage = () => {
 
   const showFilterEmpty = renderList?.length === 0;
 
-  // Debounce search input
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebouncedInputValue(inputValue);
-    }, 300);
-
-    return () => clearTimeout(timeout);
-  }, [inputValue]);
-
   // Sync component state from URL changes
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
@@ -101,7 +92,6 @@ const ProductsPage = () => {
 
     if (debouncedInputValue !== search) {
       skipSearchUrlSync.current = true;
-      setDebouncedInputValue(search);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, category, minPrice, maxPrice]);
@@ -175,7 +165,6 @@ const ProductsPage = () => {
   // Clear search query
   const handleClearSearch = () => {
     setInputValue('');
-    setDebouncedInputValue('');
     setCurrentPage(1);
 
     clearSearch();
