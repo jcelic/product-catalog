@@ -6,24 +6,32 @@ import ErrorState from '../../components/ErrorState/ErrorState';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ProductsFilter from '../../components/ProductsFilter/ProductsFilter';
 import Pagination from '../../components/Pagination/Pagination';
+import { useProductQueryParams } from '../../hooks/useProductQueryParams';
 
 const ProductsPage = () => {
   // Read current URL state
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { pathname, search } = useLocation();
+  const { pathname, search: urlSearch } = useLocation();
   const skipSearchUrlSync = useRef(false);
 
-  const urlSearch = searchParams.get('search') ?? '';
-  const category = searchParams.get('category') ?? '';
-  const minPrice = searchParams.get('minPrice') ?? '';
-  const maxPrice = searchParams.get('maxPrice') ?? '';
+  const {
+    applyFilters,
+    resetFilters,
+    clearSearch,
+    setPageParam,
+    setSearchParam,
+    search,
+    category,
+    minPrice,
+    maxPrice,
+    page,
+  } = useProductQueryParams();
 
   // Local search state
-  const [inputValue, setInputValue] = useState(urlSearch);
-  const [debouncedInputValue, setDebouncedInputValue] = useState(urlSearch);
+  const [inputValue, setInputValue] = useState(search);
+  const [debouncedInputValue, setDebouncedInputValue] = useState(search);
 
   // Filter draft state
   const [draftCategory, setDraftCategory] = useState(category);
@@ -33,7 +41,7 @@ const ProductsPage = () => {
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
 
-  const returnTo = pathname + search;
+  const returnTo = pathname + urlSearch;
 
   const {
     data: products,
@@ -85,22 +93,17 @@ const ProductsPage = () => {
   // Sync component state from URL changes
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
-    const urlSearch = searchParams.get('search') ?? '';
-    const urlCategory = searchParams.get('category') ?? '';
-    const urlMinPrice = searchParams.get('minPrice') ?? '';
-    const urlMaxPrice = searchParams.get('maxPrice') ?? '';
+    setInputValue(search);
+    setDraftCategory(category);
+    setDraftMinPrice(minPrice);
+    setDraftMaxPrice(maxPrice);
 
-    setInputValue(urlSearch);
-    setDraftCategory(urlCategory);
-    setDraftMinPrice(urlMinPrice);
-    setDraftMaxPrice(urlMaxPrice);
-
-    if (debouncedInputValue !== urlSearch) {
+    if (debouncedInputValue !== search) {
       skipSearchUrlSync.current = true;
-      setDebouncedInputValue(urlSearch);
+      setDebouncedInputValue(search);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  }, [search, category, minPrice, maxPrice]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
   // Sync debounced search with URL
@@ -111,52 +114,37 @@ const ProductsPage = () => {
       return;
     }
 
-    const currentSearchParam = searchParams.get('search') ?? '';
     const nextSearchParam = debouncedInputValue.trim();
 
-    if (currentSearchParam === nextSearchParam) {
+    if (search === nextSearchParam) {
       return;
     }
 
-    const params = new URLSearchParams(searchParams);
-
-    if (nextSearchParam) {
-      params.set('search', nextSearchParam);
-    } else {
-      params.delete('search');
-    }
-
-    params.delete('page');
     setCurrentPage(1);
-    setSearchParams(params);
+    setSearchParam(nextSearchParam);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedInputValue, searchParams]);
+  }, [debouncedInputValue, search]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
   // Sync current page with URL
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    const pageParam = params.get('page');
-
-    if (!pageParam) {
+    if (!page) {
       setCurrentPage(1);
       return;
     }
 
-    const pageNumber = Number(pageParam);
+    const pageNumber = Number(page);
 
     if (Number.isNaN(pageNumber) || pageNumber <= 0 || pageNumber === 1) {
       setCurrentPage(1);
-      params.delete('page');
-      setSearchParams(params);
+      setPageParam(1);
       return;
     }
 
     if (totalPages > 0 && pageNumber > totalPages) {
       setCurrentPage(totalPages);
-      params.set('page', String(totalPages));
-      setSearchParams(params);
+      setPageParam(totalPages);
       return;
     }
 
@@ -164,7 +152,7 @@ const ProductsPage = () => {
       setCurrentPage(pageNumber);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, totalPages]);
+  }, [page, totalPages]);
   /* eslint-enable react-hooks/set-state-in-effect */
 
   // Restore scroll position after returning from product details
@@ -184,58 +172,28 @@ const ProductsPage = () => {
   }, [showLoading, renderList]);
 
   // Clear search query
-  const clearSearch = () => {
+  const handleClearSearch = () => {
     setInputValue('');
     setDebouncedInputValue('');
     setCurrentPage(1);
 
-    const params = new URLSearchParams(searchParams);
-    params.delete('search');
-    params.delete('page');
-    setSearchParams(params);
+    clearSearch();
   };
 
   // Reset all filters
-  const resetFilters = () => {
+  const handleResetFilters = () => {
     setDraftCategory('');
     setDraftMinPrice('');
     setDraftMaxPrice('');
     setCurrentPage(1);
 
-    const params = new URLSearchParams(searchParams);
-    params.delete('category');
-    params.delete('minPrice');
-    params.delete('maxPrice');
-    params.delete('page');
-    setSearchParams(params);
+    resetFilters();
   };
 
   // Apply selected filters
-  const applyFilters = () => {
+  const handleApplyFilters = () => {
     setCurrentPage(1);
-
-    const params = new URLSearchParams(searchParams);
-
-    if (draftCategory) {
-      params.set('category', draftCategory);
-    } else {
-      params.delete('category');
-    }
-
-    if (draftMinPrice) {
-      params.set('minPrice', draftMinPrice);
-    } else {
-      params.delete('minPrice');
-    }
-
-    if (draftMaxPrice) {
-      params.set('maxPrice', draftMaxPrice);
-    } else {
-      params.delete('maxPrice');
-    }
-
-    params.delete('page');
-    setSearchParams(params);
+    applyFilters({ draftCategory, draftMinPrice, draftMaxPrice });
   };
 
   // Handle pagination changes
@@ -247,15 +205,7 @@ const ProductsPage = () => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    const params = new URLSearchParams(searchParams);
-
-    if (page > 1) {
-      params.set('page', String(page));
-    } else {
-      params.delete('page');
-    }
-
-    setSearchParams(params);
+    setPageParam(page);
   };
 
   if (isError) {
@@ -269,7 +219,7 @@ const ProductsPage = () => {
           setInputValue={setInputValue}
           inputValue={inputValue}
           isFetching={isFetching}
-          clearSearch={clearSearch}
+          clearSearch={handleClearSearch}
         />
 
         <ProductsFilter
@@ -279,8 +229,8 @@ const ProductsPage = () => {
           draftMaxPrice={draftMaxPrice}
           setDraftMinPrice={setDraftMinPrice}
           draftMinPrice={draftMinPrice}
-          applyFilters={applyFilters}
-          resetFilters={resetFilters}
+          applyFilters={handleApplyFilters}
+          resetFilters={handleResetFilters}
         />
       </div>
 
