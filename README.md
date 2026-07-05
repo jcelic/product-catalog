@@ -132,9 +132,10 @@ The project uses **Vitest** together with **React Testing Library**.
 
 Implemented tests include:
 
-- ProductCard
-- Pagination
-- ProtectedRoute
+- ProductCard component
+- Pagination component
+- ProtectedRoute component
+- filterProducts utility (unit test)
 
 Run the test suite with:
 
