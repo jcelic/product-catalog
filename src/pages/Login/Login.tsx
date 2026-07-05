@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import styles from './Login.module.css';
 import { loginUser } from '../../api/loginApi';
 import { useNavigate } from 'react-router-dom';
+import { EyeIcon, EyeSlashIcon } from '@phosphor-icons/react';
 
 const Login = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,17 +86,35 @@ const Login = () => {
 
           <div className={styles.field}>
             <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              aria-invalid={!!error}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError('');
-              }}
-            />
+
+            <div className={styles.passwordWrapper}>
+              <input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Enter your password"
+                value={password}
+                aria-invalid={!!error}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError('');
+                }}
+              />
+
+              {password && (
+                <button
+                  type="button"
+                  className={styles.passwordToggle}
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? (
+                    <EyeSlashIcon size={20} />
+                  ) : (
+                    <EyeIcon size={20} />
+                  )}
+                </button>
+              )}
+            </div>
           </div>
           {error && (
             <span className={styles.error} id="login-error" role="alert">
