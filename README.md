@@ -8,7 +8,7 @@ The application allows users to browse products, search and filter them, view de
 
 ## Live Demo
 
-[View Live Demo](https://solution-josip-celic.vercel.app)
+[View Live Demo](https://product-catalog-jc22.vercel.app)
 
 ---
 
